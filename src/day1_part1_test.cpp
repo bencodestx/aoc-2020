@@ -24,12 +24,16 @@ int main() {
   };
 
   static constexpr auto day1 = [](const auto &expenses) {
-    const auto second =
-        std::find_if(std::begin(expenses) + 1, std::end(expenses),
-                     [first = expenses[0]](const auto candidate) {
-                       return first + candidate == 2020;
-                     });
-    return expenses[0] * *second;
+    for (auto it = std::begin(expenses); it != std::end(expenses); ++it) {
+      const auto second = std::find_if(it + 1, std::end(expenses),
+                                       [first = *it](const auto candidate) {
+                                         return first + candidate == 2020;
+                                       });
+      if (second != std::end(expenses)) {
+        return *it * *second;
+      }
+    }
+    throw std::runtime_error("No solution found");
   };
 
   "input"_test = [&] {
@@ -47,5 +51,13 @@ int main() {
 
   "1721, 9999, 299 == 514579"_test = [&] {
     expect(514579_i == day1(std::array{1721, 9999, 299}));
+  };
+
+  "9999, 1721, 299 == 514579"_test = [&] {
+    expect(514579_i == day1(std::array{9999, 1721, 299}));
+  };
+
+  "no solution"_test = [&] {
+    expect(throws([] { day1(std::array{1, 2, 3, 4, 5}); }));
   };
 }
