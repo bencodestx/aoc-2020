@@ -25,7 +25,10 @@ int main() {
 
   static constexpr auto day1 = [](const auto &expenses) {
     const auto second =
-        std::find(std::begin(expenses) + 1, std::end(expenses), 1010);
+        std::find_if(std::begin(expenses) + 1, std::end(expenses),
+                     [first = expenses[0]](const auto candidate) {
+                       return first + candidate == 2020;
+                     });
     return expenses[0] * *second;
   };
 
@@ -40,5 +43,9 @@ int main() {
 
   "1010, 9999, 1010 == 1020100"_test = [&] {
     expect(1020100_i == day1(std::array{1010, 9999, 1010}));
+  };
+
+  "1721, 9999, 299 == 514579"_test = [&] {
+    expect(514579_i == day1(std::array{1721, 9999, 299}));
   };
 }
