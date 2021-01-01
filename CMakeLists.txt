@@ -8,7 +8,8 @@ function(add_unit_test TARGET)
     add_custom_command(
         OUTPUT ${TARGET}.passed
         COMMAND ${TARGET}
-        COMMAND touch ${TARGET}.passed)
+        COMMAND touch ${TARGET}.passed
+        DEPENDS ${TARGET})
     add_custom_target(test_${TARGET} ALL DEPENDS ${TARGET}.passed)
 endfunction()
 
