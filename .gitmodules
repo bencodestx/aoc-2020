@@ -1,0 +1,3 @@
+[submodule "vendor/boost-ext/ut"]
+	path = vendor/boost-ext/ut
+	url = https://github.com/boost-ext/ut.git
