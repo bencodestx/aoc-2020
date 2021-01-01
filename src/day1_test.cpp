@@ -45,4 +45,9 @@ int main() {
     std::stringstream in(example_expense_report);
     expect(514579_i == day1_part1(day1_input(in)));
   };
+
+  "sample_part2"_test = [&] {
+    std::stringstream in(example_expense_report);
+    expect(241861950_i == day1_part2(day1_input(in)));
+  };
 }

@@ -2,7 +2,7 @@
 
 #include <algorithm>
 #include <istream>
-#include <numeric>
+#include <optional>
 #include <vector>
 
 static constexpr auto day1_input = [](std::istream &in) {
@@ -14,48 +14,40 @@ static constexpr auto day1_input = [](std::istream &in) {
   return values;
 };
 
-template <typename Iter, size_t Count> struct day1_search final {
-  day1_search(const auto &container) : end(std::end(container)) {
-    Iter it = std::begin(container);
-    for (auto &iterator : iterators) {
-      iterator = it++;
+template <size_t Depth, typename Iter>
+std::optional<int> solve_day1(Iter begin, Iter end, const int target) {
+  if constexpr (Depth == 1) {
+    if (const auto it = std::find(begin, end, target); end != it) {
+      return *it;
+    } else {
+      return std::nullopt;
     }
-  }
-
-  void next() {
-    size_t i = Count - 1;
-    while (true) {
-      if (end != ++iterators[i]) {
-        ++i;
-        while (i < Count) {
-          iterators[i] = iterators[i - 1] + 1;
-          if (end == iterators[i]) {
-            throw std::runtime_error("No solution found");
-          }
-          ++i;
-        }
-        return;
+  } else {
+    for (auto it = begin; it != end; ++it) {
+      const auto child_answer =
+          solve_day1<Depth - 1>(it + 1, end, target - *it);
+      if (child_answer.has_value()) {
+        return *child_answer * *it;
       }
-      --i;
     }
+    return std::nullopt;
   }
+}
 
-  auto operator[](const size_t i) { return *iterators[i]; }
-
-  std::array<Iter, Count> iterators{};
-
-private:
-  const Iter end;
+template <size_t Depth>
+static constexpr auto day1 = [](const auto &expenses) {
+  const auto solution =
+      solve_day1<Depth>(std::begin(expenses), std::end(expenses), 2020);
+  if (not solution.has_value()) {
+    throw std::runtime_error("No solution found");
+  }
+  return *solution;
 };
 
 static constexpr auto day1_part1 = [](const auto &expenses) {
-  day1_search<decltype(std::end(expenses)), 2> search{expenses};
-  while (true) {
-    const auto first = search[0];
-    const auto second = search[1];
-    if (2020 == (first + second)) {
-      return first * second;
-    }
-    search.next();
-  }
+  return day1<2>(expenses);
+};
+
+static constexpr auto day1_part2 = [](const auto &expenses) {
+  return day1<3>(expenses);
 };
