@@ -23,8 +23,16 @@ int main() {
     return values;
   };
 
+  static constexpr auto day1 = [](const auto &expenses) {
+    return expenses[0] * expenses[1];
+  };
+
   "input"_test = [&] {
     std::stringstream in(example_expense_report);
     expect(std::vector{1721, 979, 366, 299, 675, 1456} == day1_input(in));
+  };
+
+  "1010, 1010 == 1020100"_test = [&] {
+    expect(1020100_i == day1(std::array{1010, 1010}));
   };
 }
