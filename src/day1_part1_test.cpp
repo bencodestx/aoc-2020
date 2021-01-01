@@ -60,4 +60,9 @@ int main() {
   "no solution"_test = [&] {
     expect(throws([] { day1(std::array{1, 2, 3, 4, 5}); }));
   };
+
+  "sample"_test = [&] {
+    std::stringstream in(example_expense_report);
+    expect(514579_i == day1(day1_input(in)));
+  };
 }
