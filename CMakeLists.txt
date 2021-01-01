@@ -18,7 +18,7 @@ function(add_day_part DAY PART)
     add_custom_command(
         OUTPUT day${DAY}_part${PART}_integration.passed
         COMMAND ./day${DAY}_part${PART} <${CMAKE_SOURCE_DIR}/data/day${DAY}.txt >day${DAY}_part${PART}.out
-        COMMAND diff -w ${CMAKE_SOURCE_DIR}/data/day${DAY}_part${PART}.txt day${DAY}_part${PART}.out
+        COMMAND diff -w ${CMAKE_SOURCE_DIR}/data/day${DAY}_part${PART}_answer.txt day${DAY}_part${PART}.out
         COMMAND touch day${DAY}_part${PART}_integration.passed
         BYPRODUCTS day${DAY}_part${PART}.out
         DEPENDS day${DAY}_part${PART} ${CMAKE_SOURCE_DIR}/data/day1.txt ${CMAKE_SOURCE_DIR}/data/day${DAY}_part${PART}_answer.txt) 
