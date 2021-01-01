@@ -24,7 +24,9 @@ int main() {
   };
 
   static constexpr auto day1 = [](const auto &expenses) {
-    return expenses[0] * expenses[1];
+    const auto second =
+        std::find(std::begin(expenses) + 1, std::end(expenses), 1010);
+    return expenses[0] * *second;
   };
 
   "input"_test = [&] {
@@ -34,5 +36,9 @@ int main() {
 
   "1010, 1010 == 1020100"_test = [&] {
     expect(1020100_i == day1(std::array{1010, 1010}));
+  };
+
+  "1010, 9999, 1010 == 1020100"_test = [&] {
+    expect(1020100_i == day1(std::array{1010, 9999, 1010}));
   };
 }
