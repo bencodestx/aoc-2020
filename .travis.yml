@@ -1,0 +1,12 @@
+sudo: required
+language: cpp
+services:
+  - docker
+before_install:
+  - docker pull bengoodwyn/aoc:2020
+  - docker run -itd --name build bengoodwyn/aoc:2020
+  - docker exec build git clone https://github.com/bengoodwyn/aoc-2-2-.git /repo
+script:
+  - docker exec build cmake -H/repo -B/build
+  - docker exec build cmake --build /build
+  - docker exec build cmake --build /build --target test
