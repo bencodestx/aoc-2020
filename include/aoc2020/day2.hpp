@@ -27,8 +27,8 @@ struct sled_rental_policy_t final {
 };
 
 struct toboggan_rental_policy_t final {
-  ssize_t first_position{};
-  ssize_t second_position{};
+  size_t first_position{};
+  size_t second_position{};
   char letter{};
 
   bool operator==(const toboggan_rental_policy_t &rhs) const {
@@ -36,7 +36,9 @@ struct toboggan_rental_policy_t final {
            second_position == rhs.second_position and letter == rhs.letter;
   }
 
-  bool validate(const password_t &) const { return true; }
+  bool validate(const password_t &password) const {
+    return password[first_position - 1] == letter;
+  }
 };
 
 template <typename policy_t> struct password_and_policy_t final {

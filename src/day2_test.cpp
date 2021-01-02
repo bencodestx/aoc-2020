@@ -91,4 +91,11 @@ int main() {
     in >> row;
     expect(row.policy.validate(row.password));
   };
+
+  "part2, second example"_test = [&] {
+    std::stringstream in{"1-3 b: cdefg"};
+    password_and_policy_t<toboggan_rental_policy_t> row;
+    in >> row;
+    expect(not row.policy.validate(row.password));
+  };
 }
