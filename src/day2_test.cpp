@@ -19,7 +19,7 @@ struct policy_t final {
            letter == rhs.letter;
   }
 
-  bool validate(const password_t &) const { return false; }
+  bool validate(const password_t &password) const { return password == "a"; }
 };
 
 struct password_and_policy_t final {
@@ -85,6 +85,20 @@ int main() {
   "empty password"_test = [&] {
     const policy_t policy = {.lowest = 1, .highest = 1, .letter = 'a'};
     const password_t password = "";
+
+    expect(not policy.validate(password));
+  };
+
+  "trivial password - match"_test = [&] {
+    const policy_t policy = {.lowest = 1, .highest = 1, .letter = 'a'};
+    const password_t password = "a";
+
+    expect(policy.validate(password));
+  };
+
+  "trivial password - not match"_test = [&] {
+    const policy_t policy = {.lowest = 1, .highest = 1, .letter = 'a'};
+    const password_t password = "b";
 
     expect(not policy.validate(password));
   };
