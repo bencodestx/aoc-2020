@@ -5,7 +5,8 @@ services:
 before_install:
   - docker pull bengoodwyn/aoc:2020
   - docker run -itd --name build bengoodwyn/aoc:2020
-  - docker exec build git clone https://github.com/bengoodwyn/aoc-2-2-.git /repo
+  - docker exec build git clone https://github.com/bengoodwyn/aoc-2020.git /repo
+  - docker exec -w /repo git checkout -qf $TRAVIS_COMMIT
 script:
   - docker exec build cmake -H/repo -B/build
   - docker exec build cmake --build /build

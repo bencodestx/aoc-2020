@@ -6,4 +6,5 @@ RUN apt-get update \
       && apt-get install -y \
         clang-10 \
         cmake \
+        git \
       && rm -rf /var/lib/apt/lists/*
