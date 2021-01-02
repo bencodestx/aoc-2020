@@ -68,7 +68,8 @@ int main() {
 
   "sample data passes part1"_test = [&] {
     std::stringstream in(example_passwords);
-    const auto valid_passwords = part1(input<sled_rental_policy_t>(in));
+    const auto valid_passwords =
+        count_valid_passwords(input<sled_rental_policy_t>(in));
     expect(2_i == valid_passwords);
   };
 
@@ -111,5 +112,12 @@ int main() {
     password_and_policy_t<toboggan_rental_policy_t> row;
     in >> row;
     expect(row.policy.validate(row.password));
+  };
+
+  "sample data passes part2"_test = [&] {
+    std::stringstream in(example_passwords);
+    const auto valid_passwords =
+        count_valid_passwords(input<toboggan_rental_policy_t>(in));
+    expect(1_i == valid_passwords);
   };
 }

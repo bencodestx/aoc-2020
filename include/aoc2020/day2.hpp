@@ -95,9 +95,10 @@ template <typename policy_t> auto input(std::istream &is) {
   return result;
 }
 
-auto part1(const auto &input) {
+static constexpr auto count_valid_passwords = [](const auto &input) {
   return std::count_if(std::begin(input), std::end(input), [](const auto &row) {
     return row.policy.validate(row.password);
   });
-}
+};
+
 } // namespace aoc2020::day2
