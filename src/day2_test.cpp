@@ -105,4 +105,11 @@ int main() {
     in >> row;
     expect(not row.policy.validate(row.password));
   };
+
+  "part2 can match the second character when the first does not"_test = [&] {
+    std::stringstream in{"3-1 a: abcde"};
+    password_and_policy_t<toboggan_rental_policy_t> row;
+    in >> row;
+    expect(row.policy.validate(row.password));
+  };
 }

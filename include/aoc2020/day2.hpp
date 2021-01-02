@@ -37,8 +37,8 @@ struct toboggan_rental_policy_t final {
   }
 
   bool validate(const password_t &password) const {
-    return password[first_position - 1] == letter and
-           not(password[second_position - 1] == letter);
+    return (password[first_position - 1] == letter) ^
+           (password[second_position - 1] == letter);
   }
 };
 
