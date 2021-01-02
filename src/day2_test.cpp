@@ -18,6 +18,8 @@ struct policy_t final {
     return lowest == rhs.lowest and highest == rhs.highest and
            letter == rhs.letter;
   }
+
+  bool validate(const password_t &) const { return false; }
 };
 
 struct password_and_policy_t final {
@@ -78,5 +80,12 @@ int main() {
         {.password = "ccccccccc",
          .policy = {.lowest = 2, .highest = 9, .letter = 'c'}}};
     expect(actual == expected);
+  };
+
+  "empty password"_test = [&] {
+    const policy_t policy = {.lowest = 1, .highest = 1, .letter = 'a'};
+    const password_t password = "";
+
+    expect(not policy.validate(password));
   };
 }
