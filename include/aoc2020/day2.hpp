@@ -26,6 +26,17 @@ struct sled_rental_policy_t final {
   }
 };
 
+struct toboggan_rental_policy_t final {
+  ssize_t first_position{};
+  ssize_t second_position{};
+  char letter{};
+
+  bool operator==(const toboggan_rental_policy_t &rhs) const {
+    return first_position == rhs.first_position and
+           second_position == rhs.second_position and letter == rhs.letter;
+  }
+};
+
 template <typename policy_t> struct password_and_policy_t final {
   password_t password{};
   policy_t policy{};
@@ -43,6 +54,19 @@ std::istream &operator>>(std::istream &is, sled_rental_policy_t &policy) {
   char colon;
 
   if (is >> policy.lowest >> dash >> policy.highest >> policy.letter >> colon) {
+    assert(dash == '-');
+    assert(colon == ':');
+  }
+
+  return is;
+}
+
+std::istream &operator>>(std::istream &is, toboggan_rental_policy_t &policy) {
+  char dash;
+  char colon;
+
+  if (is >> policy.first_position >> dash >> policy.second_position >>
+      policy.letter >> colon) {
     assert(dash == '-');
     assert(colon == ':');
   }

@@ -71,4 +71,17 @@ int main() {
     const auto valid_passwords = part1(input<sled_rental_policy_t>(in));
     expect(2_i == valid_passwords);
   };
+
+  "part2 input"_test = [&] {
+    std::stringstream in(example_passwords);
+    const auto actual = input<toboggan_rental_policy_t>(in);
+    const passwords_and_policies_t<toboggan_rental_policy_t> expected = {
+        {.password = "abcde",
+         .policy = {.first_position = 1, .second_position = 3, .letter = 'a'}},
+        {.password = "cdefg",
+         .policy = {.first_position = 1, .second_position = 3, .letter = 'b'}},
+        {.password = "ccccccccc",
+         .policy = {.first_position = 2, .second_position = 9, .letter = 'c'}}};
+    expect(actual == expected);
+  };
 }
