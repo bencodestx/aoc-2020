@@ -1,5 +1,6 @@
 #include <boost/ut.hpp>
 
+#include <algorithm>
 #include <cassert>
 #include <istream>
 #include <sstream>
@@ -10,8 +11,8 @@ namespace aoc2020::day2 {
 using password_t = std::string;
 
 struct policy_t final {
-  size_t lowest{};
-  size_t highest{};
+  ssize_t lowest{};
+  ssize_t highest{};
   char letter{};
 
   bool operator==(const policy_t &rhs) const {
@@ -19,7 +20,11 @@ struct policy_t final {
            letter == rhs.letter;
   }
 
-  bool validate(const password_t &password) const { return password == "a"; }
+  bool validate(const password_t &password) const {
+    const auto count =
+        std::count(std::begin(password), std::end(password), letter);
+    return count >= lowest and count <= highest;
+  }
 };
 
 struct password_and_policy_t final {
@@ -57,6 +62,12 @@ auto input(std::istream &is) {
     result.push_back(row);
   }
   return result;
+}
+
+auto part1(const auto &input) {
+  return std::count_if(std::begin(input), std::end(input), [](const auto &row) {
+    return row.policy.validate(row.password);
+  });
 }
 } // namespace aoc2020::day2
 
@@ -101,5 +112,25 @@ int main() {
     const password_t password = "b";
 
     expect(not policy.validate(password));
+  };
+
+  "lowest 0 matches when letter not present"_test = [&] {
+    const policy_t policy = {.lowest = 0, .highest = 1, .letter = 'a'};
+    const password_t password = "b";
+
+    expect(policy.validate(password));
+  };
+
+  "highest 0 does not match when letter present"_test = [&] {
+    const policy_t policy = {.lowest = 1, .highest = 0, .letter = 'a'};
+    const password_t password = "a";
+
+    expect(not policy.validate(password));
+  };
+
+  "sample data passes part1"_test = [&] {
+    std::stringstream in(example_passwords);
+    const auto valid_passwords = part1(input(in));
+    expect(2_i == valid_passwords);
   };
 }
