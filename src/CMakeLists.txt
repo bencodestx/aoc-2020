@@ -5,3 +5,4 @@ add_day_part(1 1)
 add_day_part(1 2)
 
 add_day_test(2)
+add_day_part(2 1)
