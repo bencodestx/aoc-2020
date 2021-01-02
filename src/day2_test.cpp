@@ -98,4 +98,11 @@ int main() {
     in >> row;
     expect(not row.policy.validate(row.password));
   };
+
+  "part2, third example"_test = [&] {
+    std::stringstream in{"2-9 c: ccccccccc"};
+    password_and_policy_t<toboggan_rental_policy_t> row;
+    in >> row;
+    expect(not row.policy.validate(row.password));
+  };
 }
