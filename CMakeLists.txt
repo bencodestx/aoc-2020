@@ -3,6 +3,11 @@ project(aoc-2020 LANGUAGES CXX)
 
 enable_testing()
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -pedantic -std=c++2a")
+
+add_subdirectory(vendor/boost-ext/ut)
+
 function(add_unit_test TARGET)
     add_test(${TARGET} ${TARGET})
     add_custom_command(
@@ -11,6 +16,12 @@ function(add_unit_test TARGET)
         COMMAND touch ${TARGET}.passed
         DEPENDS ${TARGET})
     add_custom_target(test_${TARGET} ALL DEPENDS ${TARGET}.passed)
+endfunction()
+
+function(add_day_test DAY)
+    add_executable(day${DAY}_test day${DAY}_test.cpp)
+    target_link_libraries(day${DAY}_test PUBLIC boost::ut)
+    add_unit_test(day${DAY}_test)
 endfunction()
 
 function(add_day_part DAY PART)
@@ -28,8 +39,4 @@ function(add_day_part DAY PART)
         DEPENDS day${DAY}_part${PART}_integration.passed)
 endfunction()
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -pedantic -std=c++2a")
-
-add_subdirectory(vendor/boost-ext/ut)
 add_subdirectory(src)

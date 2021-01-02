@@ -1,6 +1,5 @@
-add_executable(day1_test day1_test.cpp)
-target_link_libraries(day1_test PUBLIC boost::ut)
-add_unit_test(day1_test)
+include_directories(${CMAKE_SOURCE_DIR}/include)
 
+add_day_test(1)
 add_day_part(1 1)
 add_day_part(1 2)

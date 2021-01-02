@@ -5,7 +5,9 @@
 #include <optional>
 #include <vector>
 
-static constexpr auto day1_input = [](std::istream &in) {
+namespace aoc2020::day1 {
+
+static constexpr auto input = [](std::istream &in) {
   std::vector<int> values{};
   int value;
   while (in >> value) {
@@ -14,7 +16,8 @@ static constexpr auto day1_input = [](std::istream &in) {
   return values;
 };
 
-template <typename Iter> struct day1_solver final {
+namespace detail {
+template <typename Iter> struct solver final {
   template <size_t Depth>
   static std::optional<int> solve(Iter begin, Iter end, const int target) {
     for (auto it = begin; it != end; ++it) {
@@ -37,8 +40,8 @@ template <typename Iter> struct day1_solver final {
 };
 
 template <size_t Depth>
-static constexpr auto day1 = [](const auto &expenses) {
-  using solver_t = day1_solver<decltype(std::end(expenses))>;
+static constexpr auto solve = [](const auto &expenses) {
+  using solver_t = detail::solver<decltype(std::end(expenses))>;
 
   const auto solution = solver_t::template solve<Depth>(
       std::begin(expenses), std::end(expenses), 2020);
@@ -48,11 +51,13 @@ static constexpr auto day1 = [](const auto &expenses) {
   }
   return *solution;
 };
+} // namespace detail
 
-static constexpr auto day1_part1 = [](const auto &expenses) {
-  return day1<2>(expenses);
+static constexpr auto part1 = [](const auto &expenses) {
+  return detail::solve<2>(expenses);
 };
 
-static constexpr auto day1_part2 = [](const auto &expenses) {
-  return day1<3>(expenses);
+static constexpr auto part2 = [](const auto &expenses) {
+  return detail::solve<3>(expenses);
 };
+} // namespace aoc2020::day1
