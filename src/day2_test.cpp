@@ -15,8 +15,8 @@ int main() {
 
   "input"_test = [&] {
     std::stringstream in(example_passwords);
-    const auto actual = input(in);
-    const passwords_and_policies_t expected = {
+    const auto actual = input<sled_rental_policy_t>(in);
+    const passwords_and_policies_t<sled_rental_policy_t> expected = {
         {.password = "abcde",
          .policy = {.lowest = 1, .highest = 3, .letter = 'a'}},
         {.password = "cdefg",
@@ -27,35 +27,40 @@ int main() {
   };
 
   "empty password"_test = [&] {
-    const policy_t policy = {.lowest = 1, .highest = 1, .letter = 'a'};
+    const sled_rental_policy_t policy = {
+        .lowest = 1, .highest = 1, .letter = 'a'};
     const password_t password = "";
 
     expect(not policy.validate(password));
   };
 
   "trivial password - match"_test = [&] {
-    const policy_t policy = {.lowest = 1, .highest = 1, .letter = 'a'};
+    const sled_rental_policy_t policy = {
+        .lowest = 1, .highest = 1, .letter = 'a'};
     const password_t password = "a";
 
     expect(policy.validate(password));
   };
 
   "trivial password - not match"_test = [&] {
-    const policy_t policy = {.lowest = 1, .highest = 1, .letter = 'a'};
+    const sled_rental_policy_t policy = {
+        .lowest = 1, .highest = 1, .letter = 'a'};
     const password_t password = "b";
 
     expect(not policy.validate(password));
   };
 
   "lowest 0 matches when letter not present"_test = [&] {
-    const policy_t policy = {.lowest = 0, .highest = 1, .letter = 'a'};
+    const sled_rental_policy_t policy = {
+        .lowest = 0, .highest = 1, .letter = 'a'};
     const password_t password = "b";
 
     expect(policy.validate(password));
   };
 
   "highest 0 does not match when letter present"_test = [&] {
-    const policy_t policy = {.lowest = 1, .highest = 0, .letter = 'a'};
+    const sled_rental_policy_t policy = {
+        .lowest = 1, .highest = 0, .letter = 'a'};
     const password_t password = "a";
 
     expect(not policy.validate(password));
@@ -63,7 +68,7 @@ int main() {
 
   "sample data passes part1"_test = [&] {
     std::stringstream in(example_passwords);
-    const auto valid_passwords = part1(input(in));
+    const auto valid_passwords = part1(input<sled_rental_policy_t>(in));
     expect(2_i == valid_passwords);
   };
 }

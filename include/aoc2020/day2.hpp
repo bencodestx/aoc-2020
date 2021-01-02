@@ -9,12 +9,12 @@
 namespace aoc2020::day2 {
 using password_t = std::string;
 
-struct policy_t final {
+struct sled_rental_policy_t final {
   ssize_t lowest{};
   ssize_t highest{};
   char letter{};
 
-  bool operator==(const policy_t &rhs) const {
+  bool operator==(const sled_rental_policy_t &rhs) const {
     return lowest == rhs.lowest and highest == rhs.highest and
            letter == rhs.letter;
   }
@@ -26,7 +26,7 @@ struct policy_t final {
   }
 };
 
-struct password_and_policy_t final {
+template <typename policy_t> struct password_and_policy_t final {
   password_t password{};
   policy_t policy{};
 
@@ -35,9 +35,10 @@ struct password_and_policy_t final {
   }
 };
 
-using passwords_and_policies_t = std::vector<password_and_policy_t>;
+template <typename policy_t>
+using passwords_and_policies_t = std::vector<password_and_policy_t<policy_t>>;
 
-std::istream &operator>>(std::istream &is, policy_t &policy) {
+std::istream &operator>>(std::istream &is, sled_rental_policy_t &policy) {
   char dash;
   char colon;
 
@@ -49,14 +50,16 @@ std::istream &operator>>(std::istream &is, policy_t &policy) {
   return is;
 }
 
-std::istream &operator>>(std::istream &is, password_and_policy_t &row) {
+template <typename policy_t>
+std::istream &operator>>(std::istream &is,
+                         password_and_policy_t<policy_t> &row) {
   is >> row.policy >> row.password;
   return is;
 }
 
-auto input(std::istream &is) {
-  passwords_and_policies_t result{};
-  password_and_policy_t row;
+template <typename policy_t> auto input(std::istream &is) {
+  passwords_and_policies_t<policy_t> result{};
+  password_and_policy_t<policy_t> row;
   while (is >> row) {
     result.push_back(row);
   }
