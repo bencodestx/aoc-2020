@@ -84,4 +84,11 @@ int main() {
          .policy = {.first_position = 2, .second_position = 9, .letter = 'c'}}};
     expect(actual == expected);
   };
+
+  "part2, first example"_test = [&] {
+    std::stringstream in{"1-3 a: abcde"};
+    password_and_policy_t<toboggan_rental_policy_t> row;
+    in >> row;
+    expect(row.policy.validate(row.password));
+  };
 }

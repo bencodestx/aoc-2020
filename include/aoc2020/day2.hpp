@@ -35,6 +35,8 @@ struct toboggan_rental_policy_t final {
     return first_position == rhs.first_position and
            second_position == rhs.second_position and letter == rhs.letter;
   }
+
+  bool validate(const password_t &) const { return true; }
 };
 
 template <typename policy_t> struct password_and_policy_t final {
