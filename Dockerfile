@@ -8,3 +8,5 @@ RUN apt-get update \
         cmake \
         git \
       && rm -rf /var/lib/apt/lists/*
+ENV CC clang-10
+ENV CXX clang++-10
