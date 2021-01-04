@@ -34,4 +34,34 @@ int main() {
     const auto trees = part1(example_rows);
     expect(7_u == trees);
   };
+
+  "right 1, down 1"_test = [&] {
+    const auto trees = navigate(example_rows, 1, 1);
+    expect(2_u == trees);
+  };
+
+  "right 3, down 1"_test = [&] {
+    const auto trees = navigate(example_rows, 3, 1);
+    expect(7_u == trees);
+  };
+
+  "right 5, down 1"_test = [&] {
+    const auto trees = navigate(example_rows, 5, 1);
+    expect(3_u == trees);
+  };
+
+  "right 7, down 1"_test = [&] {
+    const auto trees = navigate(example_rows, 7, 1);
+    expect(4_u == trees);
+  };
+
+  "right 1, down 2"_test = [&] {
+    const auto trees = navigate(example_rows, 1, 2);
+    expect(2_u == trees);
+  };
+
+  "example part2"_test = [&] {
+    const auto result = part2(example_rows);
+    expect(336_u == result);
+  };
 }
