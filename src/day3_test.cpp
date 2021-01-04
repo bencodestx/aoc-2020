@@ -1,4 +1,4 @@
-#include "day3.hpp"
+#include "aoc2020/day3.hpp"
 
 #include <boost/ut.hpp>
 
