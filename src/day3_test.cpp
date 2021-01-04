@@ -41,6 +41,17 @@ static constexpr auto part1 = [](const geography_t &g) {
   return count;
 };
 
+static constexpr auto input = [](std::istream &in) {
+  geography_t g{};
+  std::string row;
+  while (in >> row) {
+    if (not std::empty(row)) {
+      g.push_back(row);
+    }
+  }
+  return g;
+};
+
 } // namespace aoc2020::day3
 
 // clang-format off
@@ -62,6 +73,12 @@ const aoc2020::day3::geography_t example_rows{
 int main() {
   using namespace aoc2020::day3;
   using namespace boost::ut;
+
+  "input"_test = [&] {
+    std::stringstream in{"....\n####\n..##\n##..\n"};
+    const auto g = input(in);
+    expect(g == geography_t{"....", "####", "..##", "##.."});
+  };
 
   "example"_test = [&] {
     const auto trees = part1(example_rows);
