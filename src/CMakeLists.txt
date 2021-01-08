@@ -18,3 +18,4 @@ add_day_part(4 2)
 
 add_day_test(5)
 add_day_part(5 1)
+add_day_part(5 2)

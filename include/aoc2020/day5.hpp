@@ -1,9 +1,14 @@
 #pragma once
 
+#include <algorithm>
+#include <bitset>
+#include <exception>
 #include <istream>
 #include <string>
 #include <string_view>
 #include <tuple>
+
+#include <iostream>
 
 namespace aoc2020::day5 {
 using range_t = std::pair<size_t, size_t>;
@@ -42,6 +47,21 @@ size_t part1(std::istream &in) {
     highest = std::max(highest, seatid(locate(pass)));
   }
   return highest;
+}
+
+size_t part2(std::istream &in) {
+  std::bitset<128 * 8> occupied{};
+  std::string pass;
+  while (in >> pass) {
+    occupied.set(seatid(locate(pass)));
+  }
+  for (size_t seatid = 1; seatid < (std::size(occupied) - 1); ++seatid) {
+    if (not occupied.test(seatid) and occupied.test(seatid - 1) and
+        occupied.test(seatid + 1)) {
+      return seatid;
+    }
+  }
+  throw std::runtime_error("No free seats");
 }
 
 } // namespace aoc2020::day5
