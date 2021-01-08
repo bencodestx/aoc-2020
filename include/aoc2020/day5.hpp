@@ -8,17 +8,16 @@
 #include <string_view>
 #include <tuple>
 
-#include <iostream>
-
 namespace aoc2020::day5 {
 using range_t = std::pair<size_t, size_t>;
 using location_t = std::pair<size_t, size_t>;
 
 range_t take(const char direction, const range_t x) {
+  const auto half_count = (x.second - x.first + 1u) / 2u;
   if (direction == 'F' or direction == 'L') {
-    return {x.first, x.second - (x.second - x.first + 1) / 2};
+    return {x.first, x.second - half_count};
   } else {
-    return {x.first + (x.second - x.first + 1) / 2, x.second};
+    return {x.first + half_count, x.second};
   }
 }
 
