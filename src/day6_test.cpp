@@ -20,4 +20,11 @@ int main() {
             "abc\n\na\nb\nc\n\nab\nac\n\na\na\na\na\n\nb"};
         expect(11_u == part1(example_groups));
       };
+
+  "part2 in this example the sum of these counts is 3 + 0 + 1 + 1 + 1 = 6"_test =
+      [&] {
+        std::stringstream example_groups{
+            "abc\n\na\nb\nc\n\nab\nac\n\na\na\na\na\n\nb"};
+        expect(6_u == part2(example_groups));
+      };
 }

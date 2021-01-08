@@ -24,6 +24,24 @@ auto part1(std::istream &in) {
   return sum + yes.count();
 }
 
-auto part2(std::istream &) { return "stub"; }
+auto part2(std::istream &in) {
+  std::string line;
+  std::bitset<26> all_yes{};
+  all_yes.set();
+  size_t sum{};
+  while (std::getline(in, line)) {
+    if (std::empty(line)) {
+      sum += all_yes.count();
+      all_yes.set();
+    } else {
+      std::bitset<26> yes{};
+      std::for_each(std::cbegin(line), std::cend(line), [&yes](const auto c) {
+        yes.set(static_cast<size_t>(c - 'a'));
+      });
+      all_yes &= yes;
+    }
+  }
+  return sum + all_yes.count();
+}
 
 } // namespace aoc2020::day6
