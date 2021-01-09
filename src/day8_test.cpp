@@ -17,5 +17,9 @@ int main() {
   using namespace aoc2020::day8;
   using namespace boost::ut;
 
-  "stub"_test = [&] {};
+  "input"_test = [&] {
+    std::stringstream in{example_text};
+    const auto program = input(in);
+    expect(9_u == std::size(program));
+  };
 }
