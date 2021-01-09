@@ -1,6 +1,8 @@
 #pragma once
 
+#include <algorithm>
 #include <istream>
+#include <numeric>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -67,8 +69,33 @@ auto input(std::istream &in) {
   return rules;
 }
 
-auto part1(std::istream &) { return "stub"; }
+bool can_contain(const rules_t &rules, const std::string bag,
+                 const std::string containing_bag) {
+  const auto rule = rules.at(containing_bag);
+  return std::any_of(std::begin(rule.contents), std::end(rule.contents),
+                     [&](const auto &candidate) {
+                       return (candidate.color == bag) or
+                              can_contain(rules, bag, candidate.color);
+                     });
+}
 
-auto part2(std::istream &) { return "stub"; }
+auto part1(const rules_t &rules) {
+  return std::count_if(
+      std::begin(rules), std::end(rules), [&](const auto &pair) {
+        return can_contain(rules, "shiny gold", pair.second.color);
+      });
+}
+
+size_t count_contents(const rules_t &rules, const std::string bag) {
+  const auto &rule = rules.at(bag);
+  return std::accumulate(
+      std::begin(rule.contents), std::end(rule.contents), size_t{},
+      [&](const size_t total, const contents_t &contents) {
+        return total + contents.count +
+               contents.count * count_contents(rules, contents.color);
+      });
+};
+
+auto part2(const rules_t &rules) { return count_contents(rules, "shiny gold"); }
 
 } // namespace aoc2020::day7

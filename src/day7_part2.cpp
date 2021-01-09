@@ -5,7 +5,7 @@
 int main() {
   using namespace aoc2020::day7;
 
-  std::cout << part2(std::cin) << std::endl;
+  std::cout << part2(input(std::cin)) << std::endl;
 
   return {};
 }
