@@ -23,4 +23,6 @@ int main() {
   "input"_test = [&] { expect(9_u == std::size(program)); };
 
   "part1"_test = [&] { expect(5_i == part1(program)); };
+
+  "part2"_test = [&] { expect(8_i == part2(program)); };
 }

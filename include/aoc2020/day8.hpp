@@ -3,7 +3,10 @@
 #include <cstdint>
 #include <istream>
 #include <stdexcept>
+#include <unordered_set>
 #include <vector>
+
+#include <iostream>
 
 namespace aoc2020::day8 {
 
@@ -86,6 +89,49 @@ auto part1(const program_t &program) {
   return computer.accumulator;
 }
 
-auto part2(const auto &) { return "stub"; }
+std::optional<accumulator_t> execute(const program_t &program) {
+  computer_t computer{.program = program};
+  std::unordered_set<next_instruction_t> executed_jmps{};
+  while (index(computer.next_instruction) < std::size(program)) {
+    if (program[index(computer.next_instruction)].operation ==
+        operation_t::jmp) {
+      const auto [_, new_jmp] =
+          executed_jmps.emplace(computer.next_instruction);
+      if (not new_jmp) {
+        return std::nullopt;
+      }
+    }
+    step(computer);
+  }
+  return computer.accumulator;
+}
+
+auto part2(const program_t &program) {
+  for (size_t index = 0; index < std::size(program); ++index) {
+    switch (program[index].operation) {
+    case operation_t::nop: {
+      auto copy = program;
+      copy[index].operation = operation_t::jmp;
+      const auto terminal_value = execute(copy);
+      if (terminal_value.has_value()) {
+        return terminal_value.value();
+      }
+      break;
+    }
+    case operation_t::jmp: {
+      auto copy = program;
+      copy[index].operation = operation_t::nop;
+      const auto terminal_value = execute(copy);
+      if (terminal_value.has_value()) {
+        return terminal_value.value();
+      }
+      break;
+    }
+    case operation_t::acc:
+      break;
+    }
+  }
+  throw std::runtime_error("No solution");
+}
 
 } // namespace aoc2020::day8
