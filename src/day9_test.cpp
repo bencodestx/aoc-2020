@@ -37,6 +37,6 @@ int main() {
 
   "part2"_test = [&] {
     std::stringstream in{example_text};
-    expect(0_u == part2(in));
+    expect(62_u == part2<127>(in));
   };
 }
