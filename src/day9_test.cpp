@@ -32,7 +32,7 @@ int main() {
 
   "part1"_test = [&] {
     std::stringstream in{example_text};
-    expect(0_u == part1(in));
+    expect(127_u == part1<5>(in));
   };
 
   "part2"_test = [&] {

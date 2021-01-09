@@ -8,8 +8,8 @@
 namespace aoc2020::day1 {
 
 static constexpr auto input = [](std::istream &in) {
-  std::vector<int> values{};
-  int value;
+  std::vector<size_t> values{};
+  size_t value;
   while (in >> value) {
     values.push_back(value);
   }
@@ -19,7 +19,8 @@ static constexpr auto input = [](std::istream &in) {
 namespace detail {
 template <typename Iter> struct solver final {
   template <size_t Depth>
-  static std::optional<int> solve(Iter begin, Iter end, const int target) {
+  static std::optional<size_t> solve(Iter begin, Iter end,
+                                     const size_t target) {
     for (auto it = begin; it != end; ++it) {
       const auto child_answer = solve<Depth - 1>(it + 1, end, target - *it);
       if (child_answer.has_value()) {
@@ -30,7 +31,8 @@ template <typename Iter> struct solver final {
   }
 
   template <>
-  static std::optional<int> solve<1>(Iter begin, Iter end, const int target) {
+  static std::optional<size_t> solve<1>(Iter begin, Iter end,
+                                        const size_t target) {
     if (const auto it = std::find(begin, end, target); end != it) {
       return *it;
     } else {
