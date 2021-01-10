@@ -72,6 +72,11 @@ int main() {
 
   "part2 short example"_test = [&] {
     std::stringstream in{short_example};
-    expect(0_u == part2(in));
+    expect(8_u == part2(in));
+  };
+
+  "part2 longer example"_test = [&] {
+    std::stringstream in{longer_example};
+    expect(19208_u == part2(in));
   };
 }
