@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-const std::vector<std::string> examples{
+const std::vector<std::string> examples_part1{
     R"(L.LL.LL.LL
 LLLLLLL.LL
 L.L.L..L..
@@ -82,7 +82,7 @@ int main() {
   using namespace boost::ut;
 
   "input"_test = [&] {
-    std::stringstream in{examples[0]};
+    std::stringstream in{examples_part1[0]};
     const auto result = input(in);
     expect(std::vector<std::string>{"L.LL.LL.LL", "LLLLLLL.LL", "L.L.L..L..",
                                     "LLLL.LL.LL", "L.LL.LL.LL", "L.LLLLL.LL",
@@ -90,16 +90,17 @@ int main() {
                                     "L.LLLLL.LL"} == result);
   };
 
-  "model"_test = [&] {
-    for (size_t i = 1; i < std::size(examples); ++i) {
-      std::stringstream pre_in{examples[i - 1]};
+  "model part1"_test = [&] {
+    for (size_t i = 1; i < std::size(examples_part1); ++i) {
+      std::stringstream pre_in{examples_part1[i - 1]};
       const auto pre = input(pre_in);
-      std::stringstream post_in{examples[i]};
+      std::stringstream post_in{examples_part1[i]};
       const auto post = input(post_in);
       std::stringstream expected{};
       expected << post;
 
-      const auto result = model<4>(dimensions(pre), pre);
+      const auto result =
+          model<4>(dimensions(pre), pre, count_occupied_adjacent);
       std::stringstream actual{};
       actual << result;
 
@@ -108,7 +109,7 @@ int main() {
   };
 
   "part1"_test = [&] {
-    std::stringstream in{examples[0]};
+    std::stringstream in{examples_part1[0]};
     const auto result = part1(in);
     expect(37_u == result);
   };
