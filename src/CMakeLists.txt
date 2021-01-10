@@ -47,3 +47,7 @@ add_day_part(11 2)
 add_day_test(12)
 add_day_part(12 1)
 add_day_part(12 2)
+
+add_day_test(13)
+add_day_part(13 1)
+add_day_part(13 2)
