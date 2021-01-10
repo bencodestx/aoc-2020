@@ -99,7 +99,7 @@ int main() {
       std::stringstream expected{};
       expected << post;
 
-      const auto result = model(dimensions(pre), pre);
+      const auto result = model<4>(dimensions(pre), pre);
       std::stringstream actual{};
       actual << result;
 
@@ -107,9 +107,9 @@ int main() {
     }
   };
 
-  /*  "part1"_test = [&] {
-      std::stringstream in{examples[0]};
-      const auto result = part1(in);
-      expect(37_u == result);
-    };*/
+  "part1"_test = [&] {
+    std::stringstream in{examples[0]};
+    const auto result = part1(in);
+    expect(37_u == result);
+  };
 }

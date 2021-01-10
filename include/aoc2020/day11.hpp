@@ -62,6 +62,7 @@ auto count_occupied_adjacent(const dim_t dim, const layout_t &layout,
   return count;
 }
 
+template <size_t tolerance>
 auto model(const dim_t dim, const layout_t &layout) {
   auto new_layout = layout;
   for (size_t row = 0; row < dim.rows; ++row) {
@@ -74,7 +75,7 @@ auto model(const dim_t dim, const layout_t &layout) {
         break;
       }
       case '#':
-        if (count_occupied_adjacent(dim, layout, row, col) >= 4) {
+        if (count_occupied_adjacent(dim, layout, row, col) >= tolerance) {
           new_layout[row][col] = 'L';
         }
         break;
@@ -92,7 +93,7 @@ auto part1(std::istream &in) {
   auto layout = input(in);
   const dim_t dim{dimensions(layout)};
   while (true) {
-    const auto new_layout = model(dim, layout);
+    const auto new_layout = model<4>(dim, layout);
     if (new_layout == layout) {
       break;
     }
