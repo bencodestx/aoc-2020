@@ -25,6 +25,6 @@ int main() {
   "part2"_test = [&] {
     std::stringstream in{example};
     const auto result = part2(in);
-    expect(0_i == result);
+    expect(286_i == result);
   };
 }
