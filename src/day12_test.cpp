@@ -19,7 +19,7 @@ int main() {
   "part1"_test = [&] {
     std::stringstream in{example};
     const auto result = part1(in);
-    expect(0_i == result);
+    expect(25_i == result);
   };
 
   "part2"_test = [&] {
