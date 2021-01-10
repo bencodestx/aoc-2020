@@ -2,6 +2,7 @@
 
 #include <boost/ut.hpp>
 
+#include <ostream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -68,6 +69,14 @@ L.#.L..#..
 #.LLLLLL.L
 #.#L#L#.##)"};
 
+std::ostream &operator<<(std::ostream &os,
+                         const aoc2020::day11 ::layout_t &layout) {
+  for (auto &row : layout) {
+    os << row << '\n';
+  }
+  return os;
+}
+
 int main() {
   using namespace aoc2020::day11;
   using namespace boost::ut;
@@ -80,4 +89,27 @@ int main() {
                                     "..L.L.....", "LLLLLLLLLL", "L.LLLLLL.L",
                                     "L.LLLLL.LL"} == result);
   };
+
+  "model"_test = [&] {
+    for (size_t i = 1; i < std::size(examples); ++i) {
+      std::stringstream pre_in{examples[i - 1]};
+      const auto pre = input(pre_in);
+      std::stringstream post_in{examples[i]};
+      const auto post = input(post_in);
+      std::stringstream expected{};
+      expected << post;
+
+      const auto result = model(dimensions(pre), pre);
+      std::stringstream actual{};
+      actual << result;
+
+      expect(actual.str() == expected.str());
+    }
+  };
+
+  /*  "part1"_test = [&] {
+      std::stringstream in{examples[0]};
+      const auto result = part1(in);
+      expect(37_u == result);
+    };*/
 }
