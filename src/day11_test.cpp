@@ -69,6 +69,78 @@ L.#.L..#..
 #.LLLLLL.L
 #.#L#L#.##)"};
 
+const std::vector<std::string> examples_part2{
+    R"(L.LL.LL.LL
+LLLLLLL.LL
+L.L.L..L..
+LLLL.LL.LL
+L.LL.LL.LL
+L.LLLLL.LL
+..L.L.....
+LLLLLLLLLL
+L.LLLLLL.L
+L.LLLLL.LL)",
+    R"(#.##.##.##
+#######.##
+#.#.#..#..
+####.##.##
+#.##.##.##
+#.#####.##
+..#.#.....
+##########
+#.######.#
+#.#####.##)",
+    R"(#.LL.LL.L#
+#LLLLLL.LL
+L.L.L..L..
+LLLL.LL.LL
+L.LL.LL.LL
+L.LLLLL.LL
+..L.L.....
+LLLLLLLLL#
+#.LLLLLL.L
+#.LLLLL.L#)",
+    R"(#.L#.##.L#
+#L#####.LL
+L.#.#..#..
+##L#.##.##
+#.##.#L.##
+#.#####.#L
+..#.#.....
+LLL####LL#
+#.L#####.L
+#.L####.L#)",
+    R"(#.L#.L#.L#
+#LLLLLL.LL
+L.L.L..#..
+##LL.LL.L#
+L.LL.LL.L#
+#.LLLLL.LL
+..L.L.....
+LLLLLLLLL#
+#.LLLLL#.L
+#.L#LL#.L#)",
+    R"(#.L#.L#.L#
+#LLLLLL.LL
+L.L.L..#..
+##L#.#L.L#
+L.L#.#L.L#
+#.L####.LL
+..#.#.....
+LLL###LLL#
+#.LLLLL#.L
+#.L#LL#.L#)",
+    R"(#.L#.L#.L#
+#LLLLLL.LL
+L.L.L..#..
+##L#.#L.L#
+L.L#.LL.L#
+#.LLLL#.LL
+..#.L.....
+LLL###LLL#
+#.LLLLL#.L
+#.L#LL#.L#)"};
+
 std::ostream &operator<<(std::ostream &os,
                          const aoc2020::day11 ::layout_t &layout) {
   for (auto &row : layout) {
@@ -108,9 +180,33 @@ int main() {
     }
   };
 
+  "model part2"_test = [&] {
+    for (size_t i = 1; i < std::size(examples_part2); ++i) {
+      std::stringstream pre_in{examples_part2[i - 1]};
+      const auto pre = input(pre_in);
+      std::stringstream post_in{examples_part2[i]};
+      const auto post = input(post_in);
+      std::stringstream expected{};
+      expected << post;
+
+      const auto result =
+          model<5>(dimensions(pre), pre, count_occupied_in_sight);
+      std::stringstream actual{};
+      actual << result;
+
+      expect(actual.str() == expected.str());
+    }
+  };
+
   "part1"_test = [&] {
     std::stringstream in{examples_part1[0]};
     const auto result = part1(in);
     expect(37_u == result);
+  };
+
+  "part2"_test = [&] {
+    std::stringstream in{examples_part2[0]};
+    const auto result = part2(in);
+    expect(26_u == result);
   };
 }

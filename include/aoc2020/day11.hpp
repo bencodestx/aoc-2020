@@ -62,6 +62,40 @@ auto count_occupied_adjacent(const dim_t dim, const layout_t &layout,
   return count;
 }
 
+auto count_occupied_first_seat_in_direction(const dim_t dim,
+                                            const layout_t &layout, size_t row,
+                                            size_t col,
+                                            const ssize_t row_direction,
+                                            const ssize_t col_direction) {
+  row = static_cast<size_t>(static_cast<ssize_t>(row) + row_direction);
+  col = static_cast<size_t>(static_cast<ssize_t>(col) + col_direction);
+  while (row < dim.rows and col < dim.cols) {
+    switch (layout[row][col]) {
+    case '#':
+      return 1u;
+    case 'L':
+      return 0u;
+    default:
+      break;
+    }
+    row = static_cast<size_t>(static_cast<ssize_t>(row) + row_direction);
+    col = static_cast<size_t>(static_cast<ssize_t>(col) + col_direction);
+  }
+  return 0u;
+}
+
+auto count_occupied_in_sight(const dim_t dim, const layout_t &layout,
+                             const size_t row, const size_t col) {
+  return count_occupied_first_seat_in_direction(dim, layout, row, col, 0, 1) +
+         count_occupied_first_seat_in_direction(dim, layout, row, col, 0, -1) +
+         count_occupied_first_seat_in_direction(dim, layout, row, col, 1, 0) +
+         count_occupied_first_seat_in_direction(dim, layout, row, col, -1, 0) +
+         count_occupied_first_seat_in_direction(dim, layout, row, col, 1, 1) +
+         count_occupied_first_seat_in_direction(dim, layout, row, col, 1, -1) +
+         count_occupied_first_seat_in_direction(dim, layout, row, col, -1, 1) +
+         count_occupied_first_seat_in_direction(dim, layout, row, col, -1, -1);
+}
+
 template <size_t tolerance>
 auto model(const dim_t dim, const layout_t &layout, auto &&count_fn) {
   auto new_layout = layout;
@@ -103,6 +137,18 @@ auto part1(std::istream &in) {
   return count_occupied_seats(layout);
 }
 
-auto part2(std::istream &) { return "stub"; }
+auto part2(std::istream &in) {
+  auto layout = input(in);
+  const dim_t dim{dimensions(layout)};
+  while (true) {
+    const auto new_layout = model<5>(dim, layout, count_occupied_in_sight);
+    if (new_layout == layout) {
+      break;
+    }
+    layout = new_layout;
+  }
+
+  return count_occupied_seats(layout);
+}
 
 } // namespace aoc2020::day11
