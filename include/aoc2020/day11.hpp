@@ -123,11 +123,13 @@ auto model(const dim_t dim, const layout_t &layout, auto &&count_fn) {
   return new_layout;
 }
 
-auto part1(std::istream &in) {
+namespace detail {
+template <size_t tolerance, typename Fn>
+auto day11_implementation(std::istream &in, Fn &&fn) {
   auto layout = input(in);
   const dim_t dim{dimensions(layout)};
   while (true) {
-    const auto new_layout = model<4>(dim, layout, count_occupied_adjacent);
+    const auto new_layout = model<tolerance>(dim, layout, std::forward<Fn>(fn));
     if (new_layout == layout) {
       break;
     }
@@ -136,19 +138,14 @@ auto part1(std::istream &in) {
 
   return count_occupied_seats(layout);
 }
+} // namespace detail
+
+auto part1(std::istream &in) {
+  return detail::day11_implementation<4>(in, count_occupied_adjacent);
+}
 
 auto part2(std::istream &in) {
-  auto layout = input(in);
-  const dim_t dim{dimensions(layout)};
-  while (true) {
-    const auto new_layout = model<5>(dim, layout, count_occupied_in_sight);
-    if (new_layout == layout) {
-      break;
-    }
-    layout = new_layout;
-  }
-
-  return count_occupied_seats(layout);
+  return detail::day11_implementation<5>(in, count_occupied_in_sight);
 }
 
 } // namespace aoc2020::day11
