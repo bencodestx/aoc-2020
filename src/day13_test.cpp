@@ -20,6 +20,6 @@ int main() {
 
   "part2"_test = [&] {
     std::stringstream in{example};
-    expect(0_u == part2(in));
+    expect(1068781_u == part2(in));
   };
 }

@@ -30,6 +30,53 @@ auto part1(std::istream &in) {
   }
 }
 
-auto part2(std::istream &) { return 0u; }
+auto goal(const auto &desired_offsets, const auto &departure_times) {
+  for (size_t i = 0; i < std::size(desired_offsets); ++i) {
+    if (departure_times[i] - departure_times[0] != desired_offsets[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+auto solve(const auto ainit, const auto ainc, const auto binc,
+           const auto delta) {
+  size_t a{ainit};
+  size_t b{0};
+  while (a + delta != b) {
+    if (a + delta < b) {
+      a += std::max(1ul, (b - delta - a) / ainc) * ainc;
+    }
+    if (a + delta > b) {
+      b += std::max(1ul, (a + delta - b) / binc) * binc;
+    }
+  }
+  return a;
+}
+
+auto part2(std::istream &in) {
+  std::vector<size_t> bus_numbers{};
+  std::vector<size_t> desired_offsets{};
+  std::string bus{};
+  size_t desired_offset{0};
+  std::getline(in, bus);
+  while (std::getline(in, bus, ',')) {
+    if (bus != "x") {
+      bus_numbers.push_back(std::stoul(bus));
+      desired_offsets.push_back(desired_offset);
+    }
+    ++desired_offset;
+  }
+  size_t first_occurrence = 0;
+  size_t period = bus_numbers[0];
+  for (size_t i = 1; i < std::size(bus_numbers); ++i) {
+    first_occurrence =
+        solve(first_occurrence, period, bus_numbers[i], desired_offsets[i]);
+    const auto second_occruence = solve(first_occurrence + period, period,
+                                        bus_numbers[i], desired_offsets[i]);
+    period = second_occruence - first_occurrence;
+  }
+  return first_occurrence;
+}
 
 } // namespace aoc2020::day13
