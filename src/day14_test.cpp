@@ -16,7 +16,7 @@ int main() {
 
   "part1"_test = [&] {
     std::stringstream in{example};
-    expect(0_u == part1(in));
+    expect(165_u == part1(in));
   };
 
   "part2"_test = [&] {
