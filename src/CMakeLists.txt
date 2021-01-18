@@ -51,3 +51,7 @@ add_day_part(12 2)
 add_day_test(13)
 add_day_part(13 1)
 add_day_part(13 2)
+
+add_day_test(14)
+add_day_part(14 1)
+add_day_part(14 2)
