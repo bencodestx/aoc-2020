@@ -34,31 +34,31 @@ int main() {
         expect(1_u == part1(in));
       };
 
-  "Given the starting numbers 2,1,3, the 2020th number spoken is 1."_test =
+  "Given the starting numbers 2,1,3, the 2020th number spoken is 10."_test =
       [&] {
         std::stringstream in{"2,1,3"};
         expect(10_u == part1(in));
       };
 
-  "Given the starting numbers 1,2,3, the 2020th number spoken is 1."_test =
+  "Given the starting numbers 1,2,3, the 2020th number spoken is 27."_test =
       [&] {
         std::stringstream in{"1,2,3"};
         expect(27_u == part1(in));
       };
 
-  "Given the starting numbers 2,3,1, the 2020th number spoken is 1."_test =
+  "Given the starting numbers 2,3,1, the 2020th number spoken is 78."_test =
       [&] {
         std::stringstream in{"2,3,1"};
         expect(78_u == part1(in));
       };
 
-  "Given the starting numbers 3,2,1, the 2020th number spoken is 1."_test =
+  "Given the starting numbers 3,2,1, the 2020th number spoken is 438."_test =
       [&] {
         std::stringstream in{"3,2,1"};
         expect(438_u == part1(in));
       };
 
-  "Given the starting numbers 3,1,2, the 2020th number spoken is 1."_test =
+  "Given the starting numbers 3,1,2, the 2020th number spoken is 1836."_test =
       [&] {
         std::stringstream in{"3,1,2"};
         expect(1836_u == part1(in));
