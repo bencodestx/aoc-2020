@@ -25,7 +25,7 @@ int main() {
 
   "Given the starting numbers 0,3,6, the 10th number spoken is 0."_test = [&] {
     std::stringstream in{"0,3,6"};
-    expect(0_u == part1(in, 10u));
+    expect(0_u == play_game(in, 10u));
   };
 
   "Given the starting numbers 1,3,2, the 2020th number spoken is 1."_test =
