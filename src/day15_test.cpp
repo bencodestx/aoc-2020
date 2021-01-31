@@ -9,7 +9,7 @@ int main() {
   using namespace boost::ut;
 
   "For example, suppose the starting numbers are 0,3,6"_test = [&] {
-    memory_game game{};
+    memory_game game(10);
     game.speak(0u);
     game.speak(3u);
     game.speak(6u);
