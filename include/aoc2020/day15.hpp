@@ -42,6 +42,6 @@ auto part1(auto &in, size_t turns = 2020u) {
   return number;
 }
 
-auto part2(auto &) { return 0u; }
+auto part2(auto &in) { return part1(in, 30'000'000u); }
 
 } // namespace aoc2020::day15

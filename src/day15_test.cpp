@@ -64,8 +64,45 @@ int main() {
         expect(1836_u == part1(in));
       };
 
-  "part2"_test = [&] {
-    std::stringstream in{};
-    expect(0_u == part2(in));
-  };
+  "Given the starting numbers 0,3,6, the 30000000th number spoken is 175594."_test =
+      [&] {
+        std::stringstream in{"0,3,6"};
+        expect(175594_u == part2(in));
+      };
+
+  "Given the starting numbers 1,3,2, the 30000000th number spoken is 2578."_test =
+      [&] {
+        std::stringstream in{"1,3,2"};
+        expect(2578_u == part2(in));
+      };
+
+  "Given the starting numbers 2,1,3, the 30000000th number spoken is 3544142."_test =
+      [&] {
+        std::stringstream in{"2,1,3"};
+        expect(3544142_u == part2(in));
+      };
+
+  "Given the starting numbers 1,2,3, the 30000000th number spoken is 261214."_test =
+      [&] {
+        std::stringstream in{"1,2,3"};
+        expect(261214_u == part2(in));
+      };
+
+  "Given the starting numbers 2,3,1, the 30000000th number spoken is 6895259."_test =
+      [&] {
+        std::stringstream in{"2,3,1"};
+        expect(6895259_u == part2(in));
+      };
+
+  "Given the starting numbers 3,2,1, the 30000000th number spoken is 18."_test =
+      [&] {
+        std::stringstream in{"3,2,1"};
+        expect(18_u == part2(in));
+      };
+
+  "Given the starting numbers 3,1,2, the 30000000th number spoken is 362."_test =
+      [&] {
+        std::stringstream in{"3,1,2"};
+        expect(362_u == part2(in));
+      };
 }
